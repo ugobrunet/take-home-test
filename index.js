@@ -1,12 +1,13 @@
-import { Drug, Pharmacy } from "./pharmacy";
+import { DrugFactory } from "./src/components/Drug/factories/Drug.factory";
+import { Pharmacy } from "./src/components/Pharmacy/models/Pharmacy";
 
 import fs from "fs";
 
 const drugs = [
-  new Drug("Doliprane", 20, 30),
-  new Drug("Herbal Tea", 10, 5),
-  new Drug("Fervex", 5, 40),
-  new Drug("Magic Pill", 15, 40)
+  DrugFactory.create("Doliprane", 20, 30),
+  DrugFactory.create("Herbal Tea", 10, 5),
+  DrugFactory.create("Fervex", 5, 40),
+  DrugFactory.create("Magic Pill", 15, 40)
 ];
 const trial = new Pharmacy(drugs);
 
