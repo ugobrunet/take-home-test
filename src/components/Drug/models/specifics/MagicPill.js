@@ -27,10 +27,10 @@ export class MagicPill extends Drug {
   }
 
   /**
-   * Does drug expired
+   * Does drug expire
    * @returns {boolean}
    */
-  get doesExpired() {
+  get expires() {
     return false;
   }
 }

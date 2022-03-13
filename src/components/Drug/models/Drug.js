@@ -20,10 +20,10 @@ export class Drug {
   }
 
   /**
-   * Does drug expired
+   * Does drug expire
    * @returns {boolean}
    */
-  get doesExpired() {
+  get expires() {
     return true;
   }
 
@@ -48,7 +48,7 @@ export class Drug {
    * @returns {Drug}
    */
   updateExpiresIn() {
-    if (this.doesExpired) this.expiresIn--;
+    if (this.expires) this.expiresIn--;
     return this;
   }
 
