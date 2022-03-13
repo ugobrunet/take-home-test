@@ -1,4 +1,5 @@
 import { Drug } from "../Drug";
+import { RulesConfig } from "./HerbalTea.rules-config";
 
 export class HerbalTea extends Drug {
   /**
@@ -11,18 +12,14 @@ export class HerbalTea extends Drug {
     super(name, expiresIn, benefit);
   }
 
+  get rulesConfig() {
+    return RulesConfig;
+  }
+
   /**
    * @returns {string}
    */
   static get NAME() {
     return "Herbal Tea";
-  }
-
-  /**
-   * Daily benefit variation
-   * @returns {number}
-   */
-  get dailyBenefitVariation() {
-    return this.isExpired ? 2 : 1;
   }
 }

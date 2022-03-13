@@ -1,3 +1,7 @@
+import { BusinessRule } from "../../../utils/BusinessRule/BusinessRule";
+import { BusinessRulesPlan } from "../../../utils/BusinessRule/BusinessRulesPlan";
+import { RulesConfig } from "./Drug.rules-config";
+
 export class Drug {
   /**
    * @constructor
@@ -12,11 +16,41 @@ export class Drug {
   }
 
   /**
-   * Daily benefit variation
-   * @returns {number}
+   * @typedef {{expired?:boolean, expiresIn?:number, update?:number, set?:number}} RulesConfig
+   * @type {RulesConfig[]}
    */
-  get dailyBenefitVariation() {
-    return this.isExpired ? -2 : -1;
+  get rulesConfig() {
+    return RulesConfig;
+  }
+
+  /**
+   * @returns {BusinessRulesPlan}
+   */
+  get businessRules() {
+    return new BusinessRulesPlan(
+      this.rulesConfig.map(
+        config =>
+          new BusinessRule({
+            condition: () => {
+              if (config.expired === true) {
+                return this.isExpired;
+              }
+              if (config.expiresIn) {
+                return this.expiresIn <= config.expiresIn;
+              }
+              return true;
+            },
+            cb: () => {
+              if (config.update != null) {
+                this.updateBenefitValue(config.update);
+              }
+              if (config.set != null) {
+                this.setBenefitValue(config.set);
+              }
+            }
+          })
+      )
+    );
   }
 
   /**
@@ -37,10 +71,11 @@ export class Drug {
 
   /**
    * Update drug properties after a new day has passed
-   * @returns {Drug}
+   * @returns {void}
    */
   updatePropertiesAfterNewDay() {
-    return this.updateExpiresIn().updateBenefitValue();
+    this.updateExpiresIn();
+    this.businessRules.execute();
   }
 
   /**
@@ -52,12 +87,17 @@ export class Drug {
     return this;
   }
 
+  setBenefitValue(value) {
+    this.benefit = value;
+    return this.checkBenefitBoundariesRules();
+  }
+
   /**
    * Update drug benefit property
    * @returns {Drug}
    */
-  updateBenefitValue() {
-    this.benefit += this.dailyBenefitVariation;
+  updateBenefitValue(variation) {
+    this.benefit += variation;
     return this.checkBenefitBoundariesRules();
   }
 

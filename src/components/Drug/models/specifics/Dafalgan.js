@@ -1,4 +1,5 @@
 import { Drug } from "../Drug";
+import { RulesConfig } from "./Dafalgan.rules-config";
 
 export class Dafalgan extends Drug {
   /**
@@ -11,18 +12,14 @@ export class Dafalgan extends Drug {
     super(name, expiresIn, benefit);
   }
 
+  get rulesConfig() {
+    return RulesConfig;
+  }
+
   /**
    * @requires {string}
    */
   static get NAME() {
     return "Dafalgan";
-  }
-
-  /**
-   * Daily benefit variation
-   * @returns {number}
-   */
-  get dailyBenefitVariation() {
-    return this.isExpired ? -4 : -2;
   }
 }

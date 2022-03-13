@@ -1,4 +1,5 @@
 import { Drug } from "../Drug";
+import { RulesConfig } from "./MagicPill.rules-config";
 
 export class MagicPill extends Drug {
   /**
@@ -11,19 +12,15 @@ export class MagicPill extends Drug {
     super(name, expiresIn, benefit);
   }
 
+  get rulesConfig() {
+    return RulesConfig;
+  }
+
   /**
    * @returns {string}
    */
   static get NAME() {
     return "Magic Pill";
-  }
-
-  /**
-   * Daily benefit variation
-   * @returns {number}
-   */
-  get dailyBenefitVariation() {
-    return 0;
   }
 
   /**

@@ -1,4 +1,5 @@
 import { Drug } from "../Drug";
+import { RulesConfig } from "./Fervex.rules-config";
 
 export class Fervex extends Drug {
   /**
@@ -11,28 +12,14 @@ export class Fervex extends Drug {
     super(name, expiresIn, benefit);
   }
 
+  get rulesConfig() {
+    return RulesConfig;
+  }
+
   /**
    * @returns {string}
    */
   static get NAME() {
     return "Fervex";
-  }
-
-  /**
-   * Daily benefit variation
-   * @returns {number}
-   */
-  get dailyBenefitVariation() {
-    if (this.isExpired) {
-      return -this.benefit;
-    } else {
-      if (this.expiresIn < 6) {
-        return 3;
-      } else if (this.expiresIn < 11) {
-        return 2;
-      } else {
-        return 1;
-      }
-    }
   }
 }
