@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+      // Usefull to have type checking on IDE. Kind of light TS 
+      // https://code.visualstudio.com/docs/nodejs/working-with-javascript#_type-checking-javascript
+      "checkJs": true,
+      "target": "es6"
+    },
+    "exclude": ["node_modules", "**/node_modules/*"]
+  }
